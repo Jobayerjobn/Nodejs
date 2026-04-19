@@ -545,6 +545,116 @@ app.listen(3000, () => {
 
 */
 
+/*
+//Pagination 
+import express from 'express';
+
+const app = express();
+
+const users = [
+  { id: 1, name: "Jobayer" },
+  { id: 2, name: "Rahim" },
+  { id: 3, name: "Joban" },
+  { id: 4, name: "Karim" },
+  { id: 5, name: "Sakib" },
+  { id: 6, name: "Tamim" },
+  { id: 7, name: "Rakib" },
+  { id: 8, name: "Nadim" },
+  { id: 9, name: "Asif" },
+  { id: 10, name: "Rafi" },
+  { id: 11, name: "Rony" }
+]
+app.use(express.json());
+
+app.get('/users', (req, res) => {
+    const {name, page = 1, limit = 5} = req.query;
+    let findUsers = users;
+
+    if(name){
+        findUsers = users.filter(u => u.name.toLowerCase().includes(name.toLowerCase()));
+         
+    }
+
+    //pagination
+    const pageNumber = Number(page);
+    const limitNumber = Number(limit);
+
+    const startIndex = (pageNumber - 1) * limitNumber;
+    const endIndex = pageNumber * limitNumber;
+
+    const paginationNumbers = findUsers.slice(startIndex, endIndex);
+    res.status(200).json({
+        success: true,
+        total: findUsers.length,
+        page: pageNumber,
+        limit: limitNumber,
+        data: paginationNumbers,
+
+
+    });
+});
+
+app.listen(3000, () => {
+    console.log('Server is running port on 3000');
+
+});
+
+*/
+
+
+/*
 //Problem-17
+import express from 'express';
+const app = express();
+
+const dataBase = [
+    {name: 'Jobayer', age: 19, id: 1},
+    {name: 'Joban', age: 19, id: 2},
+    {name: 'Dadu', age: 20, id: 3},
+
+];
+
+app.get('/users', (req, res, next) => {
+    try {
+        const {name} = req.query;
+
+        let findUsers = dataBase;
+        if(name){
+            findUsers = dataBase.filter(n => n.name.toLowerCase().includes(name.toLowerCase()));
+
+        }
+        if(findUsers.length === 0){
+            const error = new Error('User not found');
+            error.status = 404;
+            throw error;
+
+        }
+        res.json({
+            success: true,
+            message: findUsers,
+
+        })
+    }catch(err){
+        next(err);
+
+    }
+});
+
+app.use((err, req, res, next) => {
+    const statusCode = err.status || 500;
+    res.status(statusCode).json({
+        success: false,
+        message: err.message || 'Invalid user',
 
 
+    });
+
+});
+
+app.listen(3000, () => {
+    console.log('Server is running  on port 3000');
+
+});
+
+
+*/
